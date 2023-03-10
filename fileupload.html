@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+<head>
+    <title>Benzo Mixed It - Mixing Engineer</title>
+    <link rel="stylesheet" type="text/css" href="filestyle.css">
+    <style>
+      /* Styling for the file input element */
+      .file-input {
+        display: inline-block;
+        padding: 6px 12px;
+        cursor: pointer;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background-color: #4CAF50;
+        color: white;
+      }
+
+      /* Styling for the upload button */
+      .upload-button {
+        display: inline-block;
+        padding: 6px 12px;
+        margin-left: 10px;
+        cursor: pointer;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background-color: #4CAF50;
+        color: white;
+      }
+
+      /* Styling for the file name text */
+      .file-name {
+        display: inline-block;
+        margin-left: 10px;
+        font-size: 14px;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <form>
+      <input class="file-input" type="file" directory id="file-input" onchange="updateFileName()" />
+      <span class="file-name" id="file-name"></span>
+      <button class="upload-button" type="button" onclick="uploadFile()">Upload</button>
+    </form>
+
+    
+    <script>
+      // Function to update the file name text
+      function updateFileName() {
+        var input = document.getElementById("file-input");
+        var name = document.getElementById("file-name");
+        name.innerHTML = input.files[0].name;
+      }
+
+      // Function to handle the file upload
+      function uploadFile() {
+        var input = document.getElementById("file-input");
+        var file = input.files[0];
+
+        var formData = new FormData();
+        formData.append("file", file);
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "http://yourserver:3000/upload", true);
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                alert("File uploaded!");
+            } else {
+                alert("File not uploaded!");
+            }
+        };
+        xhr.send(formData);
+      }
+    </script>
+  </body>
+</html>
